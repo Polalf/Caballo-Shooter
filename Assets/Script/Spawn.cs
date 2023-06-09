@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    public GameObject[] eneAndObs;
+    public GameObject[] obstaculos;
+    public float tiempoSpawn;
     float timer;
-    
-    void Start()
+
+    private void Start()
     {
         
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-       
+       if(timer >= tiempoSpawn)
+       {
+            Spawnear();
+       }
+    }
+
+    void Spawnear()
+    {
+        int x = Random.Range(0, obstaculos.Length);
+        Instantiate(obstaculos[x], transform.position, transform.rotation);
+        timer = 0;
     }
 }
