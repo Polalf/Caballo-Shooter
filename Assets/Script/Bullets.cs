@@ -5,8 +5,9 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     public float speed;
-    [SerializeField] public float tiempoDestruct;
-    public bool autodestruir;
+    [SerializeField] float tiempoDestruct;
+    [SerializeField] bool autodestruir;
+
     void Start()
     {
         if(autodestruir)
@@ -14,9 +15,7 @@ public class Bullets : MonoBehaviour
             Destroy(gameObject, tiempoDestruct);
         }
     }
-       
-
-   
+  
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
