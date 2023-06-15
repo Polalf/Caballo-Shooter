@@ -4,31 +4,50 @@ using UnityEngine;
 
 public class GridMove : MonoBehaviour
 {
-    public float speed;
-    
+    //public float speed;
+    bool isMoving;
+    Vector3 oriPos, targetPos;
+    public Sfloat timeToMove = 0.2f;
 
-    
-    void Update()
+
+    private void Update()
     {
-        if(Input.GetKey(KeyCode.W))
+        
+        if(Input.GetKey(KeyCode.W) && !isMoving)
         {
-            MoveGrid(Vector3.up);
+            StartCoroutine(MovePlayer(Vector3.up));
         }
-        if(Input.GetKey(KeyCode.S))
+        if(Input.GetKey(KeyCode.S) && !isMoving)
         {
-            MoveGrid(Vector3.down);
+            StartCoroutine(MovePlayer(Vector3.down));
         }
-        if(Input.GetKey(KeyCode.A))
+        if(Input.GetKey(KeyCode.A) && !isMoving)
         {
-            MoveGrid(Vector3.left);
+            StartCoroutine(MovePlayer(Vector3.left));
         }
-        if(Input.GetKey(KeyCode.D))
+        if(Input.GetKey(KeyCode.D) && !isMoving)
         {
-            MoveGrid(Vector3.right);
+            StartCoroutine(MovePlayer(Vector3.right));
         }
     }
-    void MoveGrid(Vector3 dir)
+
+    IEnumerator MovePlayer(Vector3 dir)
     {
-        transform.Translate(dir * speed * Time.deltaTime);
+        isMoving = true;
+
+        float elapsedTime = 0;
+
+        oriPos = transform.position;
+        targetPos = oriPos + dir;
+        while(elapsedTime < timeToMove)
+        {
+            transform.position = Vector3.Lerp(oriPos, targetPos, (elapsedTime / timeToMove));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPos;
+        isMoving = false;
     }
+
 }
