@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class GridMove : MonoBehaviour
 {
-    //public float speed;
+    public float speed;
     bool isMoving;
     Vector3 oriPos, targetPos;
-    public Sfloat timeToMove = 0.2f;
-
+    float timeToMove = 0.2f;
+   
 
     private void Update()
     {
         
-        if(Input.GetKey(KeyCode.W) && !isMoving)
+        if(Input.GetKeyDown(KeyCode.W) && !isMoving)
         {
-            StartCoroutine(MovePlayer(Vector3.up));
+            StartCoroutine(MovePlayer(Vector3.up + new Vector3(0, speed)));
         }
-        if(Input.GetKey(KeyCode.S) && !isMoving)
+        if(Input.GetKeyDown(KeyCode.S) && !isMoving)
         {
-            StartCoroutine(MovePlayer(Vector3.down));
+            StartCoroutine(MovePlayer(Vector3.down + new Vector3(0, -speed)));
         }
-        if(Input.GetKey(KeyCode.A) && !isMoving)
+        if (Input.GetKeyDown(KeyCode.A) && !isMoving)
         {
-            StartCoroutine(MovePlayer(Vector3.left));
+            StartCoroutine(MovePlayer(Vector3.left + new Vector3(-speed,0)));
         }
-        if(Input.GetKey(KeyCode.D) && !isMoving)
+        if(Input.GetKeyDown(KeyCode.D) && !isMoving)
         {
-            StartCoroutine(MovePlayer(Vector3.right));
+            StartCoroutine(MovePlayer(Vector3.right + new Vector3(speed, 0)));
         }
     }
 
@@ -39,6 +39,7 @@ public class GridMove : MonoBehaviour
 
         oriPos = transform.position;
         targetPos = oriPos + dir;
+
         while(elapsedTime < timeToMove)
         {
             transform.position = Vector3.Lerp(oriPos, targetPos, (elapsedTime / timeToMove));
