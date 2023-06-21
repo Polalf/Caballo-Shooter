@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     public float speed;
+    public int damage;
     [SerializeField] float tiempoDestruct;
     [SerializeField] bool autodestruir;
 
@@ -19,5 +20,9 @@ public class Bullets : MonoBehaviour
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
     }
 }
