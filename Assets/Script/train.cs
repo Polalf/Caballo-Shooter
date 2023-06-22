@@ -4,15 +4,45 @@ using UnityEngine;
 
 public class train : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Stats")]
+    [SerializeField] float speed;
+    [SerializeField] int life;
+    float currentSpeed;
+
+    [Header("Objetos")]
+    public GameObject target;
+    public GameObject[] vagones;
+    bool canActivate;
+    
+    
+    
     void Start()
     {
-        
+        canActivate = false;
+        currentSpeed = speed;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        transform.position += new Vector3(0, currentSpeed) * Time.deltaTime;
+        if (transform.position.y >= target.transform.position.y)
+        {
+            currentSpeed = 0;
+            canActivate = true;
+        }
+        if(canActivate)
+        {
+            Atacar();
+        }
+    }
+    void Atacar()
+    {
+        for(int i = 0; i < vagones.Length; i++)
+        {
+            vagones[i].GetComponent<vagon>().ActivarVagon();
+            canActivate = false;
+            target.SetActive(false);
+        }
     }
 }
