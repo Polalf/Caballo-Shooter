@@ -8,10 +8,13 @@ public class Enemy : MonoBehaviour
     public Transform shotCtrl;
     [SerializeField] float cd;
     public GameObject bullet;
-    public Transform target;
+    
+
     [Header("Stats")]
     public float life;
 
+    [Header("Persecucion")]
+    public Transform target;
 
     private void Start()
     {
@@ -19,6 +22,7 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
+
         if(life <=0)
         {
 
