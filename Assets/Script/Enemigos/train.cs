@@ -16,15 +16,6 @@ public class train : MonoBehaviour
     [Header("Movimiento")]
     public Transform puntoA;
     public Transform puntoB;
-    public Transform target;
-
-    //void Start()
-    //{
-    //    target.position = puntoA.position;
-    //    canMove = true;
-    //    currentSpeed = speed;
-    //}
-
 
     void Update()
     {
@@ -43,24 +34,24 @@ public class train : MonoBehaviour
             DetenerTren();
             
         }
-        
+
         if(canMove)
         {
             transform.position += new Vector3(0, currentSpeed) * Time.deltaTime;
-            if (transform.position.y >= target.transform.position.y)
+            if (transform.position.y >= puntoA.transform.position.y)
             {
-                //currentSpeed = 0;
-                Atacar();
                 canMove = false;
-                
+                Atacar();
             }
         }
+       
+            
+
     }
     public void Activar()
     {
         canMove = true;
         life = 100;
-        target.position = puntoA.position;
         currentSpeed = speed;
         canCheck = true;
         
@@ -77,25 +68,20 @@ public class train : MonoBehaviour
     }
     public void DetenerTren()
     {
-        target.position = puntoB.position;
-        
+        int i = 0;
         currentSpeed = speed * -1;
         canMove = true;
         
-        if (transform.position.y <= target.transform.position.y)
+        if (transform.position.y <= puntoB.transform.position.y)
         {
             canMove = false;
             canCheck = false;
-            int i = 0;
             while (i < vagones.Length)
             {
-                gameObject.GetComponentInParent<invocadorEnemigos>().ActivarRutinaTren();
                 vagones[i].GetComponent<vagon>().DesactivarVagon();
                 i++;
+                gameObject.GetComponentInParent<invocadorEnemigos>().ActivarRutinaTren();
             }
-            
         }
-        
-
     }
 }

@@ -12,23 +12,36 @@ public class GridMove : MonoBehaviour
 
     private void Update()
     {
-        
-        if(Input.GetKeyDown(KeyCode.W) && !isMoving)
+        if(transform.position.y != 6)
         {
-            StartCoroutine(MovePlayer(Vector3.up + new Vector3(0, speed)));
+            if (Input.GetKeyDown(KeyCode.W) && !isMoving)
+            {
+                StartCoroutine(MovePlayer(Vector3.up + new Vector3(0, speed)));
+            }
         }
-        if(Input.GetKeyDown(KeyCode.S) && !isMoving)
+        if(transform.position.y != -9)
         {
-            StartCoroutine(MovePlayer(Vector3.down + new Vector3(0, -speed)));
+            if (Input.GetKeyDown(KeyCode.S) && !isMoving)
+            {
+                StartCoroutine(MovePlayer(Vector3.down + new Vector3(0, -speed)));
+            }
         }
-        if (Input.GetKeyDown(KeyCode.A) && !isMoving)
+        if(transform.position.x != -6)
         {
-            StartCoroutine(MovePlayer(Vector3.left + new Vector3(-speed,0)));
+            if (Input.GetKeyDown(KeyCode.A) && !isMoving)
+            {
+                StartCoroutine(MovePlayer(Vector3.left + new Vector3(-speed, 0)));
+            }
         }
-        if(Input.GetKeyDown(KeyCode.D) && !isMoving)
+        if (transform.position.x != 6)
         {
-            StartCoroutine(MovePlayer(Vector3.right + new Vector3(speed, 0)));
+            if (Input.GetKeyDown(KeyCode.D) && !isMoving)
+            {
+                StartCoroutine(MovePlayer(Vector3.right + new Vector3(speed, 0)));
+            }
         }
+
+            
     }
 
     IEnumerator MovePlayer(Vector3 dir)

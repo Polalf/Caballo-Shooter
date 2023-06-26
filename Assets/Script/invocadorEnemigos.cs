@@ -6,14 +6,14 @@ public class invocadorEnemigos : MonoBehaviour
 {
     [SerializeField] float minCd, maxCd;
     float cdTren, cdGun;
-    [SerializeField] GameObject tren; //gunfighter;
+    [SerializeField] GameObject tren, gunfighter;
     public bool canTren, canGun;
     void Start()
     {
         //GUNFIGTHER
-        //canGun = true;
-        //cdGun = Random.Range(minCd, maxCd);
-        //StartCoroutine(ActivarGun());
+        canGun = true;
+        cdGun = Random.Range(minCd, maxCd);
+        StartCoroutine(ActivarGun());
         //TREN
         canTren = true;
         cdTren = Random.Range(minCd, maxCd);
@@ -21,15 +21,21 @@ public class invocadorEnemigos : MonoBehaviour
 
     }
 
-    
-   
-    //IEnumerator ActivarGun()
-    //{
-    //    canGun = false;
-    //    yield return new WaitForSeconds(cdGun);
-    //    gunfighter.GetComponent<Enemy>();// activar
+    //RUTINA GUNFIGHTER
+    public void ActivarRutinaGun()
+    {
+        cdGun = Random.Range(minCd, maxCd);
+        StartCoroutine(ActivarGun());
+    }
+    IEnumerator ActivarGun()
+    {
+        canGun = false;
+        yield return new WaitForSeconds(cdGun);
+        gunfighter.GetComponent<Enemy>().ActivarGunfighter();
 
-    //}
+    }
+
+    //RUTINA TREN
     public void ActivarRutinaTren()
     {
         cdTren = Random.Range(minCd, maxCd);

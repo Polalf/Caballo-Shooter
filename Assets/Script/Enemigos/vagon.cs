@@ -7,27 +7,25 @@ public class vagon : MonoBehaviour
     public GameObject[] bandits;
     int i = 0;
     public int contador = 0;
-   
-    private void Start()
-    {
-        
-        contador = bandits.Length;
-    }
+    bool canCheck;
+    
     private void Update()
     {
-        if(contador <= 0)
+        if (contador <= 0)
         {
             gameObject.GetComponentInParent<train>().DetenerTren();
+               
         }
-        
     }
     public void ActivarVagon()
     {
+        contador = bandits.Length;
+        
         i = 0;
         do
         {
             bandits[i].SetActive(true);
-            //Debug.Log(bandits[1].name + "activado");
+            bandits[i].GetComponent<vagonEnemy>().ActivarDisparo();
             i++;
             
         }
@@ -36,15 +34,14 @@ public class vagon : MonoBehaviour
     }
     public void DesactivarVagon()
     {
-        i = 0;
-        do
+        
+        for(int i = 0; i < bandits.Length; i++)
         {
             bandits[i].SetActive(false);
-            bandits[i].GetComponent<vagonEnemy>().ActivarDisparo();
-            //Debug.Log(bandits[1].name + "activado");
-            i++;
+            bandits[i].GetComponent<vagonEnemy>().ResetearValores();
+            contador++;
         }
-        while (i < bandits.Length);
+        
     }
     
 
