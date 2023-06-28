@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class obstaculos : MonoBehaviour
 {
-    public int life;
-
-    public bool isDestruct;
+    [SerializeField] int life;
+    public int damage;
+    [SerializeField] bool isDestruct;
     
     void Update()
     {
         if (life <= 0)
         {
+            
             Destroy(gameObject);
         }
 

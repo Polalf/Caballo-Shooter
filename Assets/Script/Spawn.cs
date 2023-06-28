@@ -73,31 +73,31 @@ public class Spawn : MonoBehaviour
     {
         if(terrenoInst =="DesactivarIzquierda")
         {
-            spawns[0].SetActive(false);
-            spawns[1].SetActive(false);
-
-            spawns[2].SetActive(true);
-            spawns[3].SetActive(true);
-            spawns[4].SetActive(true);
-        }
-        else if (terrenoInst == "DesactivarCentro")
-        {
-            spawns[0].SetActive(true);
-            spawns[1].SetActive(true);
-
-            spawns[2].SetActive(false);
-
-            spawns[3].SetActive(true);
-            spawns[4].SetActive(true);
-        }
-        else if (terrenoInst == "DesactivarDerecha")
-        {
             spawns[0].SetActive(true);
             spawns[1].SetActive(true);
             spawns[2].SetActive(true);
 
             spawns[3].SetActive(false);
             spawns[4].SetActive(false);
+        }
+        else if (terrenoInst == "DesactivarCentro")
+        {
+            spawns[0].SetActive(false);
+
+            spawns[1].SetActive(true);
+            spawns[2].SetActive(true);
+            spawns[3].SetActive(true);
+
+            spawns[4].SetActive(false);
+        }
+        else if (terrenoInst == "DesactivarDerecha")
+        {
+            spawns[0].SetActive(false);
+            spawns[1].SetActive(false);
+
+            spawns[2].SetActive(true);
+            spawns[3].SetActive(true);
+            spawns[4].SetActive(true);
         }
         else
         {

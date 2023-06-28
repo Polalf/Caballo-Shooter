@@ -1,79 +1,94 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Control de Disparo")]
-    public Transform shotCtrl;
+    [SerializeField] int puntaje;
+    [Header("Movimiento")]
+    [SerializeField] float offset;
+    [SerializeField] Transform target;
+
+    [Header("Vida")]
+    [SerializeField] int life;
+    int currentLife;
+    bool isDead;
+    [SerializeField] float minTiempoFuera, maxTiempoFuera;
+    float tiempoFuera;
+
+    [Header("Ataque")]
+    [SerializeField] GameObject bullet;
     [SerializeField] float minCd, maxCd;
     float cd;
-    public GameObject bullet;
+    [SerializeField] Transform shotCtrl;
+   
+    
+    void Start()
+    {
+        ActivarEnemy();
+        
+        currentLife = life;
+    }
 
-
-    [Header("Stats")]
-    public float life;
-    bool isLife;
-    bool canMove;
-
-    [Header("Persecucion")]
-    public Transform player;
-    [SerializeField] float offset;
-    [SerializeField] Transform puntoA, target;
 
     void Update()
     {
-        if (canMove)
+        //MOVIMIENTO
+        transform.position = new Vector3(offset, target.position.y);
+        
+        //VIDA
+        if(!isDead)
         {
-            transform.position += target.position * Time.deltaTime;
-        }
-        if (transform.position.x <= offset)
-        {
-            canMove = false;
-            isLife = true;
-        }
-        if (isLife)
-        {
-            transform.position = new Vector3(offset, player.position.y);
-            if (life <= 0)
+            if (currentLife <= 0)
             {
-                isLife = false;
-                canMove = true;
-                DetenerGunfighter();
+                StopCoroutine(Disparo());
+                StartCoroutine(TiempoFuera());
+                isDead = true;
             }
         }
-
+        
     }
+
+    //FUNCIONES
+    void ActivarEnemy()
+    {
+        currentLife = life;
+        isDead = false;
+        cd = Random.Range(minCd, maxCd);
+        StartCoroutine(Disparo());
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            life -= collision.gameObject.GetComponent<Bullets>().damage;
+            currentLife -= collision.gameObject.GetComponent<Bullets>().damage;
         }
     }
-    public void ActivarGunfighter()
-    {
-        life = 100;
-        canMove = true;
-        StartCoroutine(Disparo());
-        target.position = new Vector3(offset, 0);
-    }
-    public void DetenerGunfighter()
-    { 
-        target.position = new Vector3(puntoA.position.x, 0);
-        canMove = true;
-        if (transform.position.x <= puntoA.position.x)
-        {
-            canMove = false;
-            gameObject.GetComponentInParent<invocadorEnemigos>().ActivarRutinaGun();
-        }
-        
-    }
+
+    //COROUTINAS
+
     IEnumerator Disparo()
     {
-        yield return new WaitForSeconds(cd);
-        Instantiate(bullet, shotCtrl.transform.position, shotCtrl.transform.rotation);
-        cd = Random.Range(minCd, maxCd);
+        while(true)
+        {
+            yield return new WaitForSeconds(cd);
+            Instantiate(bullet, shotCtrl.position, shotCtrl.rotation);
+            cd = Random.Range(minCd, maxCd);
+        }
     }
+
+    IEnumerator TiempoFuera()
+    {
+
+        tiempoFuera = Random.Range(minTiempoFuera, maxTiempoFuera);
+        target.gameObject.GetComponent<ScoreControl>().score += puntaje;
+        for (float i = 0; i < tiempoFuera; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        ActivarEnemy();
+        
+    }
+
     
 }

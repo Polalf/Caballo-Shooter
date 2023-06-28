@@ -34,7 +34,14 @@ public class vagonEnemy : MonoBehaviour
         cd = Random.Range(minCd, maxCd);
         StartCoroutine(Disparo());
     }
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Bullet"))
+        {
+            currentLife -= collision.gameObject.GetComponent<Bullets>().damage;
+        }
+    }
+
 
     IEnumerator Disparo()
     {

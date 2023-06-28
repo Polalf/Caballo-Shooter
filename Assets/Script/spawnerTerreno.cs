@@ -5,19 +5,19 @@ using UnityEngine;
 public class spawnerTerreno : MonoBehaviour
 {
     public GameObject controlSpawners;
-    public GameObject[] terrenos;
-    public Transform sigTerreno;
+    [SerializeField] GameObject[] terrenos;
+    public Transform cambioSpawners;
 
 
     void Update()
     {
 
     } 
-    void GeneradorDeTerreno()
+    public void GeneradorDeTerreno()
     {
         int x = Random.Range(0, terrenos.Length);
-        Instantiate(terrenos[x], transform.position, transform.rotation);
-        if(terrenos[x].transform.up == sigTerreno.position)
+        Instantiate(terrenos[x],transform);
+        if(terrenos[x].transform.position.y <= cambioSpawners.position.y)
         {
             switch (x)
             {
